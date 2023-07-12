@@ -4,6 +4,7 @@
  */
 package FormHotel;
 
+import javax.swing.JOptionPane;
 import models.UserManage;
 
 /**
@@ -35,7 +36,6 @@ public class ManageUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_uname = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txt_password = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_nama = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -45,6 +45,7 @@ public class ManageUser extends javax.swing.JFrame {
         btn_delete = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         back = new javax.swing.JButton();
+        txt_password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,12 +76,6 @@ public class ManageUser extends javax.swing.JFrame {
         });
 
         jLabel2.setText("Passworrd");
-
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Nama");
 
@@ -127,6 +122,11 @@ public class ManageUser extends javax.swing.JFrame {
         });
 
         back.setText("BACK");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,21 +148,20 @@ public class ManageUser extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_update)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btn_delete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_clear)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 14, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_password)
-                                        .addComponent(txt_uname, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_hp, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(46, 46, 46))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txt_password, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                    .addComponent(txt_uname)
+                                    .addComponent(txt_nama)
+                                    .addComponent(txt_hp))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,10 +208,6 @@ public class ManageUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_unameActionPerformed
 
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
-
     private void txt_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_namaActionPerformed
@@ -223,23 +218,81 @@ public class ManageUser extends javax.swing.JFrame {
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         // TODO add your handling code here:
+        String uname = txt_uname.getText();
+        String password = String.valueOf(txt_password.getPassword());
+        String nama = txt_nama.getText();
+        String hp = txt_hp.getText();
+        
+        if(!uname.isEmpty() && !password.isEmpty()&& !nama.isEmpty()&& !hp.isEmpty()){
+            users.insert(uname, password, nama, hp);
+            table_user.setModel(users.showtable());
+            clear();
+        }else{
+            JOptionPane.showMessageDialog(null, "Silakan isi field kolom input terlebih dahulu!");
+        }
     }//GEN-LAST:event_btn_addActionPerformed
 
+        public void clear(){
+        // TODO add your handling code here:
+        txt_uname.setText("");
+        txt_password.setText("");
+        txt_nama.setText("");
+        txt_hp.setText("");
+    } 
+        public void getData(){
+        int baris = table_user.getSelectedRow();
+        txt_uname.setText(String.valueOf(table_user.getValueAt(baris,1)));
+//        txt_password.setText(String.valueOf(table_user.getValueAt(baris,2)));
+        txt_nama.setText(String.valueOf(table_user.getValueAt(baris, 3)));
+        txt_hp.setText(String.valueOf(table_user.getValueAt(baris, 4)));
+    }
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // TODO add your handling code here:
+        int selectedRow = table_user.getSelectedRow();
+        if (selectedRow != -1) {
+                    String uname = txt_uname.getText();
+                    String password = String.valueOf(txt_password.getPassword());
+                    String nama = txt_nama.getText();
+                    String harga = txt_hp.getText();
+              int id = (int) table_user.getValueAt(selectedRow, 0); // Mengambil ID dari kolom pertama (index 0)
+              users.update( uname, password, nama, harga, id);
+            } else {
+               JOptionPane.showMessageDialog(null, "Silakan pilih baris dalam tabel terlebih dahulu!");
+             }
+        table_user.setModel(users.showtable());
+        clear();
+        
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
+                int selectedRow = table_user.getSelectedRow();
+        if (selectedRow != -1) {
+              int id = (int) table_user.getValueAt(selectedRow, 0); // Mengambil ID dari kolom pertama (index 0)
+              users.delete(id);
+            } else {
+               JOptionPane.showMessageDialog(null, "Silakan pilih baris dalam tabel terlebih dahulu!");
+             }
+        table_user.setModel(users.showtable());
+        clear();
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
         // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void table_userMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_userMouseClicked
         // TODO add your handling code here:
+        getData();
     }//GEN-LAST:event_table_userMouseClicked
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+            Menu m = new Menu();
+            this.hide();
+            m.setVisible(true);
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,7 +343,7 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JTable table_user;
     private javax.swing.JTextField txt_hp;
     private javax.swing.JTextField txt_nama;
-    private javax.swing.JTextField txt_password;
+    private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_uname;
     // End of variables declaration//GEN-END:variables
 }
