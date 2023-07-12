@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,6 +36,7 @@ public class UserManage {
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("ID");
             model.addColumn("Username");
+            model.addColumn("Password");
             model.addColumn("Nama");
             model.addColumn("No Handphone");
  
@@ -42,12 +45,14 @@ public class UserManage {
             int i = 1;
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
+//                String hash = rs.getString("password");
+//                String computedHash = computeHash(hash);
             	model.addRow(new Object[] {
                         rs.getInt("id"),
             		rs.getString("username"),
-            		rs.getString("room_number"),
-            		rs.getString("room_type"),
-            		rs.getInt("price"),
+                        rs.getString("password"),
+            		rs.getString("name"),
+            		rs.getString("handphone"),
             	});
             	i++;
             }
@@ -67,7 +72,7 @@ public class UserManage {
         boolean exists = false;
         try {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
-            PreparedStatement statement = conn.prepareStatement("SELECT id FROM rooms WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id FROM users WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             exists = resultSet.next();
@@ -76,17 +81,17 @@ public class UserManage {
         }
         return exists;
     }        
-    public void update(String newKode, String newNomor, String newTipe, double newHarga, int id) {
+    public void update(String newUsername, String newPass, String newName, String newHp, int id) {
 	try {
 		Class.forName(JDBC_DRIVER);
 		conn = DriverManager.getConnection(DB_URL,USER,PASS);
                 boolean exists = checkIDExists(id);
                 if(exists){
-                        ps = conn.prepareStatement("UPDATE rooms SET room_code=?, room_number=?, room_type=?, price=? WHERE id=?");
-                        ps.setString(1, newKode);
-	                ps.setString(2, newNomor);
-	                ps.setString(3, newTipe);
-	                ps.setDouble(4, newHarga);
+                        ps = conn.prepareStatement("UPDATE users SET username=?, password=?, name=?, handphone=? WHERE id=?");
+                        ps.setString(1, newUsername);
+	                ps.setString(2, newPass);
+	                ps.setString(3, newName);
+	                ps.setString(4, newHp);
 	                ps.setInt(5, id);
                         ps.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Data berhasil diupdate!");
@@ -106,7 +111,7 @@ public class UserManage {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             boolean exists = checkIDExists(id);
                 if(exists){
-                        ps = conn.prepareStatement("DELETE FROM rooms WHERE id=?");
+                        ps = conn.prepareStatement("DELETE FROM users WHERE id=?");
 	                ps.setInt(1, id);
                         ps.executeUpdate();
                         JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
@@ -120,23 +125,23 @@ public class UserManage {
 		e.printStackTrace();
 		}
     }
-    public void insert(String kode, String nomor, String tipe, double harga)
+    public void insert(String username, String password, String name, String hp)
 		{
 			try {
                             Class.forName(JDBC_DRIVER);
                             conn = DriverManager.getConnection(DB_URL,USER,PASS);
                             stmt = conn.createStatement();
-                            if (isKodeRoomExist(conn, kode)) {
+                            if (isUsernameExist(conn, username)) {
                             JOptionPane.showMessageDialog(null, "Insert data gagal, kode rooms sudah dipakai!");
                             } else {
 				
-				String sql = "INSERT INTO rooms (room_code,room_number,room_type,price) VALUES (?,?,?,?)";
+				String sql = "INSERT INTO users (username,password,name,hp) VALUES (?,?,?,?)";
 				ps = conn.prepareStatement(sql);
 				
-				ps.setString(1, kode);
-				ps.setString(2, nomor);
-				ps.setString(3, tipe);
-				ps.setDouble(4, harga);
+				ps.setString(1, username);
+				ps.setString(2, password);
+				ps.setString(3, name);
+				ps.setString(4, hp);
 				ps.execute();
                                 JOptionPane.showMessageDialog(null, "Insert data berhasil!");
 				
@@ -148,12 +153,12 @@ public class UserManage {
 				e.printStackTrace();
 			}
 		} 
-    private static boolean isKodeRoomExist(Connection conn, String koderoom) throws SQLException {
+    private static boolean isUsernameExist(Connection conn, String username) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
         try {
-            stmt = conn.prepareStatement("SELECT COUNT(*) AS count FROM rooms WHERE room_code = ?");
-            stmt.setString(1, koderoom);
+            stmt = conn.prepareStatement("SELECT COUNT(*) AS count FROM users WHERE username = ?");
+            stmt.setString(1, username);
             resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
@@ -168,5 +173,21 @@ public class UserManage {
             }
         }
         return false;
+    }
+        private static String computeHash(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(input.getBytes());
+
+            // Convert the byte array to hexadecimal representation
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

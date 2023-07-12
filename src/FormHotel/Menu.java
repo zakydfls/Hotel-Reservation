@@ -119,6 +119,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void manage_usersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manage_usersActionPerformed
         // TODO add your handling code here:
+            ManageUser m = new ManageUser();
+            this.hide();
+            m.setVisible(true);
     }//GEN-LAST:event_manage_usersActionPerformed
 
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
