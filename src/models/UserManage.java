@@ -45,12 +45,12 @@ public class UserManage {
             int i = 1;
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
-//                String hash = rs.getString("password");
-//                String computedHash = computeHash(hash);
+                String hash = rs.getString("password");
+                String computedHash = computeHash(hash);
             	model.addRow(new Object[] {
                         rs.getInt("id"),
             		rs.getString("username"),
-                        rs.getString("password"),
+                        computedHash,
             		rs.getString("name"),
             		rs.getString("handphone"),
             	});
@@ -135,7 +135,7 @@ public class UserManage {
                             JOptionPane.showMessageDialog(null, "Insert data gagal, kode rooms sudah dipakai!");
                             } else {
 				
-				String sql = "INSERT INTO users (username,password,name,hp) VALUES (?,?,?,?)";
+				String sql = "INSERT INTO users (username,password,name,handphone) VALUES (?,?,?,?)";
 				ps = conn.prepareStatement(sql);
 				
 				ps.setString(1, username);
