@@ -126,6 +126,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void transactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transactionActionPerformed
         // TODO add your handling code here:
+            Transaction t = new Transaction();
+            this.hide();
+            t.setVisible(true);
     }//GEN-LAST:event_transactionActionPerformed
 
     /**
