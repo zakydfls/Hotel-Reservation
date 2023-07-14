@@ -77,6 +77,11 @@ public class Transaction extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTree1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         table_rooms.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -164,6 +169,20 @@ public class Transaction extends javax.swing.JFrame {
         btn_pesan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pesanActionPerformed(evt);
+            }
+        });
+
+        cekout.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cekoutInputMethodTextChanged(evt);
+            }
+        });
+
+        cekin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cekinPropertyChange(evt);
             }
         });
 
@@ -319,6 +338,7 @@ public class Transaction extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namaActionPerformed
@@ -402,6 +422,24 @@ public class Transaction extends javax.swing.JFrame {
             d.setVisible(true);
 //            d.display();
     }//GEN-LAST:event_btn_showActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+//        LocalDate checkInDate = getDateFromChooser(cekin);
+//        LocalDate checkOutDate = getDateFromChooser(cekout);
+//        if (checkInDate == null || checkOutDate == null) {
+//            txt_harga.setText(String.valueOf(trans.getHarga(txt_kode.getText())));
+//        } else {
+//            double numberOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+//            double harga_total = numberOfDays * trans.getHarga(txt_kode.getText());
+//            txt_harga.setText(String.valueOf(harga_total));
+//        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void cekinPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cekinPropertyChange
+        // TODO add your handling code here:
+        updateHargaText();
+    }//GEN-LAST:event_cekinPropertyChange
     
     
 //    private void autocompleteThirdField() {
@@ -452,10 +490,28 @@ public class Transaction extends javax.swing.JFrame {
             txt_harga.setText(String.valueOf(table_rooms.getValueAt(baris, 4)));
         } else {
             double numberOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-            double harga_total = (1 + numberOfDays) * Double.parseDouble(table_rooms.getValueAt(baris, 4).toString());
+            double harga = Double.parseDouble(table_rooms.getValueAt(baris, 4).toString());
+            double harga_total = numberOfDays * harga;
             txt_harga.setText(String.valueOf(harga_total));
         }
     }
+    
+    private void updateHargaText() {
+//    LocalDate checkInDate = getDateFromChooser(cekin);
+//    LocalDate checkOutDate = getDateFromChooser(cekout);
+//    
+//    if (checkInDate != null && checkOutDate != null) {
+//        double numberOfDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+//        String kode = txt_kode.getText();
+//        int harga = trans.getHarga(kode);
+//        double harga_total = numberOfDays * harga;
+//        System.err.println(numberOfDays);
+//        System.err.println(harga);
+//        txt_harga.setText(String.valueOf(harga_total));
+//    } else {
+//        txt_harga.setText("");
+//    }
+}
     /**
      * @param args the command line arguments
      */
