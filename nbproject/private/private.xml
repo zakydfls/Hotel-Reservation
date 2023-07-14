@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/FormHotel/Login.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/FormHotel/detail.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/models/Trans.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/models/UserManage.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/FormHotel/ManageUser.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/models/Rooms.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/FormHotel/ManageRooms.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/models/Users.java</file>
-            <file>file:/D:/hika/kuliah/semester%204/pbo2/latihan%20uas/hotel/Hotel-Reservation/src/FormHotel/Transaction.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/models/Users.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/FormHotel/Login.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/FormHotel/ManageRooms.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/FormHotel/Transaction.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/models/Rooms.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/FormHotel/Menu.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/models/UserManage.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/FormHotel/detail.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/models/Trans.java</file>
+            <file>file:/G:/Tugas%20Akhir/HotelReservation/HotelReservation/src/models/Detail.java</file>
         </group>
     </open-files>
 </project-private>
